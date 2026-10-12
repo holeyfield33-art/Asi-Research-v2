@@ -1,0 +1,250 @@
+{
+  "schema": "asi-coverage-v1",
+  "measurement_revision": "bb5b48bc535b23430ab439e584e2caebf1fb5115",
+  "architecture_source": {
+    "repository": "agent-security-index",
+    "revision": "cfd5ef925c5ebd1df9236a6bd51d2e1bf0f3e161",
+    "path": "src/components/architecture-note-001.tsx",
+    "sha256": "b78ed8604b4ad8f6db1ab0f213b3fbe6e6b29ac17ecc19f6e3666613949cdee0"
+  },
+  "status_meaning": "tested means selected paths were measured, not that the complete invariant/threat is proven",
+  "invariants": [
+    {
+      "id": "T1",
+      "title": "Reference is not authority",
+      "definition": "Possessing Ref_A without a valid authorization must not yield plaintext or trigger materialization.",
+      "status": "tested",
+      "outcome": "selected cases passed",
+      "cases": [
+        "no-grant",
+        "unknown-ref",
+        "revoked",
+        "expired",
+        "replay",
+        "tampered-content",
+        "tampered-digest",
+        "tampered-policy",
+        "tampered-parents"
+      ],
+      "unit_tests": [
+        "test_identity_positive_control_and_constant_hash_falsification",
+        "test_expiry_boundary_and_fresh_grant"
+      ],
+      "limitation": "Trusted issuance and digest pinning assumed; guessing space, issuer compromise and cross-user identity not tested."
+    },
+    {
+      "id": "T2",
+      "title": "No self-authorization",
+      "definition": "Changing the requested operation, purpose, recipient, or destination must not widen the planner’s authority.",
+      "status": "tested",
+      "outcome": "selected cases passed",
+      "cases": [
+        "substitute-operation",
+        "substitute-purpose",
+        "substitute-destination",
+        "substitute-ref",
+        "self-authorize"
+      ],
+      "unit_tests": [
+        "test_malformed_requests_never_execute"
+      ],
+      "limitation": "Only fixed request vocabulary and trusted in-process grants; signed/distributed delegation not implemented."
+    },
+    {
+      "id": "T3",
+      "title": "Controlled plaintext",
+      "definition": "During computation, authorized plaintext appears only inside the designated worker boundary under the stated implementation threat model; trusted ingestion and Gate registration remain inside the trusted data path.",
+      "status": "tested",
+      "outcome": "selected cases passed",
+      "cases": [
+        "authorized-compute",
+        "sandbox-isolation",
+        "audit-channel"
+      ],
+      "unit_tests": [
+        "test_os_isolation",
+        "test_actual_worker_transport_faults_are_bounded_and_sanitized",
+        "test_worker_failure_does_not_expose_error_text"
+      ],
+      "limitation": "Selected process/channel probes only; no residual erasure, covert-channel or compromised trusted-worker claim."
+    },
+    {
+      "id": "T4",
+      "title": "No derived-data laundering",
+      "definition": "A protected parent cannot silently produce an unrestricted child merely because the output is newly generated.",
+      "status": "tested",
+      "outcome": "selected cases passed",
+      "cases": [
+        "authorized-compute",
+        "lineage-confusion",
+        "policy-laundering",
+        "tampered-parents",
+        "tampered-policy"
+      ],
+      "unit_tests": [
+        "test_malformed_worker_output_no_registration_and_no_replay",
+        "test_snapshot_is_identity_checked_and_used"
+      ],
+      "limitation": "One derivation level with trusted complete input mediation; semantic causation and external hidden inputs not established."
+    },
+    {
+      "id": "T5",
+      "title": "Compute does not imply disclose",
+      "definition": "Permission to transform data does not automatically permit display, export, send, or other disclosure.",
+      "status": "tested",
+      "outcome": "selected cases passed",
+      "cases": [
+        "compute-to-disclose",
+        "authorized-display"
+      ],
+      "unit_tests": [
+        "test_disclosure_requires_distinct_authority_not_just_unused_token",
+        "test_deny_everything_fails_authorized_control"
+      ],
+      "limitation": "Synthetic controller display sink only; external-service release, human observation and revocation after disclosure not tested."
+    }
+  ],
+  "threats": [
+    {
+      "id": "I-1",
+      "title": "Reference issuance & registry",
+      "definition": "Planner obtains, guesses, or is given a reference outside the trusted issuance path.",
+      "invariants": "T1",
+      "published_severity": "High",
+      "status": "tested",
+      "cases": [
+        "unknown-ref",
+        "substitute-ref",
+        "no-grant"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Only selected unauthorized-use paths; entropy/guessing campaigns and compromised issuance are not evaluated."
+    },
+    {
+      "id": "I-2",
+      "title": "Resolver request interface",
+      "definition": "Planner-supplied operation, purpose, or destination is accidentally treated as authoritative.",
+      "invariants": "T2",
+      "published_severity": "High",
+      "status": "tested",
+      "cases": [
+        "substitute-operation",
+        "substitute-purpose",
+        "substitute-destination",
+        "self-authorize"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Fixed schema and externally selected synthetic grants; not arbitrary enterprise policy."
+    },
+    {
+      "id": "I-3",
+      "title": "Process isolation",
+      "definition": "Planner and worker share memory, file descriptors, environment, or other unintended channels.",
+      "invariants": "T3",
+      "published_severity": "Critical",
+      "status": "tested",
+      "cases": [
+        "sandbox-isolation"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Actual host-file/environment/FD/network/file-creation probes; no kernel or shared-kernel covert-channel claim."
+    },
+    {
+      "id": "I-4",
+      "title": "Worker output channels",
+      "definition": "Plaintext escapes through stdout, logs, temporary files, shared memory, or other writable paths.",
+      "invariants": "T3 / T5",
+      "published_severity": "Critical",
+      "status": "tested",
+      "cases": [
+        "sandbox-isolation",
+        "audit-channel"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Real pipe faults are in the unit-test record; no arbitrary malicious trusted-code replacement or perfect erasure claim."
+    },
+    {
+      "id": "I-5",
+      "title": "Representation Gate",
+      "definition": "Gate accepts false lineage instead of reconstructing parents from the actual materialization manifest.",
+      "invariants": "T4",
+      "published_severity": "High",
+      "status": "tested",
+      "cases": [
+        "authorized-compute",
+        "lineage-confusion",
+        "policy-laundering"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Parent/policy enforcement for one registered transformation; complete semantic lineage remains outside scope."
+    },
+    {
+      "id": "I-6",
+      "title": "Residual plaintext",
+      "definition": "Plaintext remains in swap, core dumps, page cache, accelerator memory, or other residual state.",
+      "invariants": "T3",
+      "published_severity": "High",
+      "status": "untested",
+      "cases": [],
+      "outcome": "not measured",
+      "limitation": "No swap/page-cache/accelerator/residual-memory measurement. Core-dump limits are configuration, not proof of erasure."
+    },
+    {
+      "id": "I-7",
+      "title": "Grant storage",
+      "definition": "Planner or another local process reads or modifies authenticated delegation material.",
+      "invariants": "T1 / T2",
+      "published_severity": "High",
+      "status": "tested",
+      "cases": [
+        "sandbox-isolation",
+        "self-authorize"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Planner cannot access mounted controller storage/environment or claim a grant; other local users/processes and persisted secret storage are outside scope."
+    },
+    {
+      "id": "I-8",
+      "title": "Audit history",
+      "definition": "Audit data becomes a leakage channel or is mistakenly treated as authorization state.",
+      "invariants": "Indirect",
+      "published_severity": "Medium",
+      "status": "tested",
+      "cases": [
+        "audit-channel"
+      ],
+      "outcome": "selected paths passed",
+      "limitation": "Decision-only synthetic audit has no tested payload leakage; timing/history inference and durable audit governance are untested."
+    },
+    {
+      "id": "I-9",
+      "title": "Resolver availability",
+      "definition": "Planner floods expensive authorization or materialization requests.",
+      "invariants": "Availability",
+      "published_severity": "Medium",
+      "status": "untested",
+      "cases": [],
+      "outcome": "not measured",
+      "limitation": "Resource limits and output caps exist, but no sustained-flood or availability benchmark was performed."
+    },
+    {
+      "id": "I-10",
+      "title": "Planner-visible metadata",
+      "definition": "Type, size, timing, existence, or workflow metadata reveals protected structure.",
+      "invariants": "Model weakening",
+      "published_severity": "Medium",
+      "status": "untested",
+      "cases": [],
+      "outcome": "not measured",
+      "limitation": "Reference/existence/workflow metadata intentionally exposed; no timing, cardinality or structure-inference measurement."
+    }
+  ],
+  "out_of_scope": [
+    "kernel/root compromise",
+    "malicious trusted controller/worker replacement",
+    "multi-user identity",
+    "external model providers",
+    "stateful planner memory",
+    "complete semantic causation"
+  ]
+}

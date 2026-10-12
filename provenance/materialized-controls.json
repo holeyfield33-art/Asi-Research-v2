@@ -1,0 +1,85 @@
+{
+  "schema": "asi-materialized-controls-v1",
+  "timestamp_utc": "2026-10-12T16:31:53Z",
+  "source_revision": "2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c",
+  "worktree_status": "",
+  "upstream_revision": "302cd020a3a51fd3a405e0ee8b4c8223b27c22a1",
+  "source_sha256": {
+    ".gitignore": "6feaded4e28ea86e001a6751b4e3d960e8b7c31b9616ff9936b79297086e809b",
+    "ANCESTRY.md": "0e4084e8f98eb8a0ad996c55f9f87686ecb40a0fe1633d3303e27b540581ffa8",
+    "LICENSE": "24bb80cbfe4fcf6e3238363a42fcbc762f34d3dee0e8d10b500ab4cc537defa6",
+    "README.md": "a6ea4e28c4cd6905ff66dffd0f904e0d2af3cbf81bb06b733eb8247dce06b167",
+    "fixture/expected-identity.json": "228b3fba7dcac2ccb50b90b350ea9600765e55e8a27ebf1ba79956df5e49ed9a",
+    "fixture/expected.json": "21e2e3d59bf1fd606d4af76afb4a383e4a648522cba60b4cca6c3c4338a93263",
+    "fixture/substituted.json": "a10eae891d450c3a59482dd21129b2d126f048db624b8648bbd3a9623c85a896",
+    "identity_model/__init__.py": "2e2c5916b5608012f18200242032f2838eb2be2abe95736b014fad3c30ac1b2d",
+    "identity_model/canon.py": "203c858b261128a126ebff0241c1788652fcac732e81c4590734757929ea709f",
+    "identity_model/hasher.py": "1928658c81f2905c8c1611ca2bd1117c02751529d5c37ccaf2f44f00f02ad0b5",
+    "identity_model/objects.py": "b944dffa01877954c3c5b8e3930f7b3bab4f4949947d64ad463959ab5cac0f36",
+    "run.py": "4bcd95dd81bbf37669d9eb2ed86cfdb61686037dee3f915411a800288c202b2b",
+    "tests/test_controls.py": "4e29899ecb3a9e94c39bbededa671464662d34b93a34685bb00d32c482a456f3"
+  },
+  "dependencies": "Python standard library only; no network, install or credentials",
+  "environment": {
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.6"
+  },
+  "controls": [
+    "test_baseline",
+    "test_identical_substitution_fails",
+    "test_changed_digest_fails",
+    "test_constant_hash_fails"
+  ],
+  "runs": [
+    {
+      "command": [
+        "C:\\Users\\SuperAdmin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "run.py"
+      ],
+      "returncode": 0,
+      "stdout": "naive reference check: ACCEPTS substituted object\npost-materialization content verification: REJECTS substituted object\nexpected SHA-256: d0cfe8c016380fa5907d5c58c65331501de84deb3a948fdcb142021f5f653160\nactual SHA-256:   5324461e81c853ace68a25e0215c42745cf8b1cd998aefbfe254730a21329a46\nPASS: reference equality does not imply object equality\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\SuperAdmin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-O",
+        "run.py"
+      ],
+      "returncode": 0,
+      "stdout": "naive reference check: ACCEPTS substituted object\npost-materialization content verification: REJECTS substituted object\nexpected SHA-256: d0cfe8c016380fa5907d5c58c65331501de84deb3a948fdcb142021f5f653160\nactual SHA-256:   5324461e81c853ace68a25e0215c42745cf8b1cd998aefbfe254730a21329a46\nPASS: reference equality does not imply object equality\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\SuperAdmin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_baseline (test_controls.Controls.test_baseline) ... ok\ntest_changed_digest_fails (test_controls.Controls.test_changed_digest_fails) ... ok\ntest_constant_hash_fails (test_controls.Controls.test_constant_hash_fails) ... ok\ntest_identical_substitution_fails (test_controls.Controls.test_identical_substitution_fails) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.018s\n\nOK\n"
+    },
+    {
+      "command": [
+        "C:\\Users\\SuperAdmin\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_baseline (test_controls.Controls.test_baseline) ... ok\ntest_changed_digest_fails (test_controls.Controls.test_changed_digest_fails) ... ok\ntest_constant_hash_fails (test_controls.Controls.test_constant_hash_fails) ... ok\ntest_identical_substitution_fails (test_controls.Controls.test_identical_substitution_fails) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.027s\n\nOK\n"
+    }
+  ],
+  "all_pass": true,
+  "interpretation": "Local mechanism execution, not independent reproduction or complete Experiment 001 evidence."
+}

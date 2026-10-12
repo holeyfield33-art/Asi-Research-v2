@@ -1,0 +1,54 @@
+{
+    "sources":  [
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "cfd5ef925c5ebd1df9236a6bd51d2e1bf0f3e161",
+                        "path":  "src/components/architecture-note-001.tsx",
+                        "sha256":  "b78ed8604b4ad8f6db1ab0f213b3fbe6e6b29ac17ecc19f6e3666613949cdee0",
+                        "repository":  "agent-security-index"
+                    },
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "cfd5ef925c5ebd1df9236a6bd51d2e1bf0f3e161",
+                        "path":  "src/data/research.ts",
+                        "sha256":  "e5b3ac414072ad1b5f483ed10d98b7878c5794ae5c218fe4d30b8d470f772c52",
+                        "repository":  "agent-security-index"
+                    },
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c",
+                        "path":  "README.md",
+                        "sha256":  "a6ea4e28c4cd6905ff66dffd0f904e0d2af3cbf81bb06b733eb8247dce06b167",
+                        "repository":  "materialized-identity-lab"
+                    },
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c",
+                        "path":  "ANCESTRY.md",
+                        "sha256":  "0e4084e8f98eb8a0ad996c55f9f87686ecb40a0fe1633d3303e27b540581ffa8",
+                        "repository":  "materialized-identity-lab"
+                    },
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c",
+                        "path":  "run.py",
+                        "sha256":  "4bcd95dd81bbf37669d9eb2ed86cfdb61686037dee3f915411a800288c202b2b",
+                        "repository":  "materialized-identity-lab"
+                    },
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c",
+                        "path":  "identity_model/hasher.py",
+                        "sha256":  "1928658c81f2905c8c1611ca2bd1117c02751529d5c37ccaf2f44f00f02ad0b5",
+                        "repository":  "materialized-identity-lab"
+                    },
+                    {
+                        "treatment":  "read as design/mechanism input; no code copied",
+                        "revision":  "2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c",
+                        "path":  "identity_model/canon.py",
+                        "sha256":  "203c858b261128a126ebff0241c1788652fcac732e81c4590734757929ea709f",
+                        "repository":  "materialized-identity-lab"
+                    }
+                ],
+    "schema":  "asi-sources-v1"
+}
