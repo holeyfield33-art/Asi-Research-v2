@@ -1,0 +1,24 @@
+name: Experiment checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  boundaries:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install namespace launcher
+        run: sudo apt-get update && sudo apt-get install -y bubblewrap
+      - name: Allow unprivileged test namespaces on this ephemeral runner
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - name: Test boundaries
+        run: python3 -m unittest discover -s tests -v
+      - name: Test optimized execution
+        run: python3 -O -m unittest discover -s tests -v
+      - name: Record selected campaign
+        run: python3 -m lab.run --output results/local-ci.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: experiment-observations
+          path: results/local-ci.json
