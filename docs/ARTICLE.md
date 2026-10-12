@@ -1,21 +1,8 @@
-# Reference ≠ Authority: Measuring an AI Agent Data Boundary
+# Reference ≠ Authority: Experimental Results from a Controlled Materialization Boundary
 
-**ASI Research v2 — article draft, based on Experiment 001.**
+## Experiment 001 — Selected deterministic control paths, measured locally
 
-An agent can name protected information and request a transformation without
-receiving that information. Experiment 001 implements this separation in a small
-synthetic lab and measures selected ways it could fail. The result is a bounded
-pass on the recorded Linux configuration: authorized computation succeeds,
-unauthorized requests fail, and a separate permission is required for disclosure.
-The experiment does not establish production security or protection against a
-real language model.
-
-Implementation and evidence: [Asi-Research-v2](https://github.com/holeyfield33-art/Asi-Research-v2),
-[frozen implementation](https://github.com/holeyfield33-art/Asi-Research-v2/tree/bb5b48bc535b23430ab439e584e2caebf1fb5115),
-[protocol](PROTOCOL.md), [campaign record](../results/experiment-001.json), and
-[test record](../results/verification.json).
-
-## The question
+## 1. Research question and prior architecture
 
 AI agent workflows often pass data to the planner as soon as an operation involves
 that data. This couples coordination with possession. It can also blur the
@@ -33,7 +20,9 @@ but it is not a language model and does not search adaptively for new attacks.
 This makes the first measurement about the control boundary rather than model
 behavior. Future model-driven testing would be a distinct experiment.
 
-## What was built
+The published architecture note remains the intellectual starting point, with its historical experiment-pending status preserved. This follow-up is a distinct experimental artifact. K1 is separate and contributes no evidence here.
+
+## 2. Implementation and trust assumptions
 
 The lab uses a trusted controller, a separate planner process, and a separate
 worker process. The controller registers two synthetic strings. The planner
@@ -62,8 +51,6 @@ destination is a synthetic sink inside the trusted controller. It models an
 independently authorized release; it is not a test of an external provider or
 human-facing application.
 
-## Why materialized identity matters
-
 A correct-looking locator does not establish that the object returned under it
 is the intended object. The earlier Materialized Identity Lab demonstrated this
 narrow substitution mechanism. Experiment 001 incorporates a new commitment
@@ -85,7 +72,31 @@ Content identity does not authenticate a publisher, establish truth, or prove
 semantic causation. Here lineage means the dependency recorded by the trusted
 runtime for one execution.
 
-## What the tests found
+## 3. Experimental setup and reproducibility
+
+The measured source revision is bb5b48bc535b23430ab439e584e2caebf1fb5115. The frozen run occurred on October 12, 2026, at 08:25:55 UTC on Ubuntu 26.04 under WSL2, Python 3.14.4 and Bubblewrap 0.11.1. Its worktree was clean. This is Linux process isolation on a Windows host, not native Windows isolation.
+
+The protected input is the synthetic string “synthetic protected canary 7d42”; uppercase conversion is the positive control. Random references and tokens vary per run. Tokens remain in the controller, while grant constraints, requests, decisions, observations, host versions and a 20-file source manifest are recorded.
+
+The original materialized identity lab's four controls were rerun in ordinary and optimized mode. Their source/upstream revisions, tracked-file hashes, environment, exact commands and outputs are recorded separately. The dependency is Python's standard library only. That local mechanism evidence is ancestry, not a replacement for Experiment 001 or independent reproduction.
+
+## 4. Five invariants and test methodology
+
+The original T1–T5 definitions are copied exactly into the machine-readable coverage record; this summary does not redefine them. Tested means selected control paths were measured, not that a complete invariant was proven.
+
+| Invariant | Selected tests | Interpretation limit |
+| --- | --- | --- |
+| T1 — Reference is not authority | no-grant, unknown-ref, revoked, expired, replay, tampered-content, tampered-digest, tampered-policy, tampered-parents | Trusted issuance and digest pinning assumed; guessing space, issuer compromise and cross-user identity not tested. |
+| T2 — No self-authorization | substitute-operation, substitute-purpose, substitute-destination, substitute-ref, self-authorize | Only fixed request vocabulary and trusted in-process grants; signed/distributed delegation not implemented. |
+| T3 — Controlled plaintext | authorized-compute, sandbox-isolation, audit-channel | Selected process/channel probes only; no residual erasure, covert-channel or compromised trusted-worker claim. |
+| T4 — No derived-data laundering | authorized-compute, lineage-confusion, policy-laundering, tampered-parents, tampered-policy | One derivation level with trusted complete input mediation; semantic causation and external hidden inputs not established. |
+| T5 — Compute does not imply disclose | compute-to-disclose, authorized-display | Synthetic controller display sink only; external-service release, human observation and revocation after disclosure not tested. |
+
+Authorized compute and display controls reject a deny-everything interpretation. Denied requests must execute no worker and release no display. The disclosure case uses a fresh, unused compute-only grant for the exact child, so it measures authority constraints rather than replay alone.
+
+The grouped sandbox probe uses the identical launcher as planner and worker. Actual host-file, controller-code, process-memory-path, environment, inheritable-FD, live host-listener and file-creation attempts supplement source inspection. Blocking selected paths is not an exhaustive process-isolation proof.
+
+## 5. Actual results and failures
 
 The frozen implementation was measured on October 12, 2026, using Ubuntu 26.04
 under WSL2, Python 3.14.4 and Bubblewrap 0.11.1. The campaign recorded 19
@@ -123,7 +134,30 @@ stderr, raw text, multiple JSON values and oversized output. Those outputs were
 rejected without reflecting protected error text. The controller bounds pipe
 collection and applies a timeout before accepting an output candidate.
 
-## What remains untested
+Of the 19 request/decision scenarios, two are authorized controls and 17 are expected denials. No selected scientific invariant failure was observed. The constant-hash mutant and deny-everything controller deliberately fail the relevant controls; these negative results are preserved, not relabeled as secure operation.
+
+Before freezing, a snapshot test failed with a missing child reference because its mock callback did not match the two-argument worker API. The callback was corrected before the measured revision. This is a development failure, not a scientific invariant result. Hosted GitHub CI did not start because of an account billing lock; that infrastructure result remains documented separately from local execution.
+
+## 6. Ten implementation-threat assessments
+
+Every published implementation threat is assessed below. Tested means the selected paths passed, with the stated limitations. I-6, I-9 and I-10 remain untested. No selected threat path failed; intentionally broken implementations are falsification controls.
+
+| Threat | Assessment | Remaining boundary |
+| --- | --- | --- |
+| I-1 — Reference issuance & registry | tested: selected paths passed | Only selected unauthorized-use paths; entropy/guessing campaigns and compromised issuance are not evaluated. |
+| I-2 — Resolver request interface | tested: selected paths passed | Fixed schema and externally selected synthetic grants; not arbitrary enterprise policy. |
+| I-3 — Process isolation | tested: selected paths passed | Actual host-file/environment/FD/network/file-creation probes; no kernel or shared-kernel covert-channel claim. |
+| I-4 — Worker output channels | tested: selected paths passed | Real pipe faults are in the unit-test record; no arbitrary malicious trusted-code replacement or perfect erasure claim. |
+| I-5 — Representation Gate | tested: selected paths passed | Parent/policy enforcement for one registered transformation; complete semantic lineage remains outside scope. |
+| I-6 — Residual plaintext | untested: not measured | No swap/page-cache/accelerator/residual-memory measurement. Core-dump limits are configuration, not proof of erasure. |
+| I-7 — Grant storage | tested: selected paths passed | Planner cannot access mounted controller storage/environment or claim a grant; other local users/processes and persisted secret storage are outside scope. |
+| I-8 — Audit history | tested: selected paths passed | Decision-only synthetic audit has no tested payload leakage; timing/history inference and durable audit governance are untested. |
+| I-9 — Resolver availability | untested: not measured | Resource limits and output caps exist, but no sustained-flood or availability benchmark was performed. |
+| I-10 — Planner-visible metadata | untested: not measured | Reference/existence/workflow metadata intentionally exposed; no timing, cardinality or structure-inference measurement. |
+
+Published severity labels remain provisional priorities, not evidence maturity. Out-of-scope conditions include kernel/root compromise, malicious trusted components, multi-user identity, external providers, durable planner memory and complete semantic causation.
+
+## 7. Observed limitations and unresolved questions
 
 These observations do not exclude every way to violate the architecture's five
 invariants. The trusted controller, worker implementation, operating system and
@@ -137,23 +171,27 @@ request flooding. The read-only system runtime is not a minimal hardened image.
 The reported runs share one host configuration and one scripted suite; they are
 not independent reproduction.
 
-## Evidence and next steps
+The core-dump limit does not prove erasure. Output caps and CPU limits do not measure sustained flood resilience. Visible references and workflow existence are not evidence of metadata privacy. A blocked host-process memory pathname without /proc does not exhaust shared-kernel attacks. External connection denial is supplemented by a positively reachable live host-listener control.
 
-The measured revision is `bb5b48bc535b23430ab439e584e2caebf1fb5115`.
-The record includes a clean worktree state, host versions, a manifest of 20 source
-file hashes, grant constraints, requests, decisions and individual observations.
-A separate checker matched those source hashes to Git objects and matched the
-campaign report to its recorded SHA-256. These checks establish record
-consistency; they do not turn observations into a universal guarantee.
+## 8. Interpretation and implications for agent security
 
-The repository retains its MIT license and records design and mechanism sources
-in [the provenance manifest](../provenance/sources.json). Its original initial
-commit is preserved, followed by a focused implementation freeze and a results
-and article-draft commit. No upstream histories or K1 experiment artifacts were
-imported.
+The result is narrower than “the architecture is secure.” In this measured workflow, the planner coordinates a protected transformation without receiving plaintext, and compute authority does not automatically authorize disclosure. A checked snapshot and grant-pinned commitment address selected substitution paths; neither content identity nor authorization alone supplies all the required controls.
 
-The next useful research steps are independent reproduction, adversarial model
-integration under the same frozen boundaries, and targeted expansion into
-stateful memory and richer policy. Experiment 001 supplies a reproducible first
-measurement: coordination without automatic plaintext possession worked for the
-selected workflow, and computation did not automatically grant disclosure.
+A distinct local evidence-review pass verified source/report consistency, positive controls, denial side effects, real sandbox observations and coverage. It is not external independent reproduction. The review gives CONDITIONAL GO for a bounded experimental article, subject to human publication review and explicit limits. No incident, AAC mapping, validated mitigation, product claim, novelty proof or production security guarantee follows from these results.
+
+## 9. Reproduction instructions and evidence links
+
+Use a separate checkout of the exact measured revision, preserving historical reports. Linux, Python 3.10+, Git and Bubblewrap are required; Windows users run inside Ubuntu WSL. No AI subscription, API key or model endpoint is needed.
+
+- Clone Asi-Research-v2 and check out bb5b48bc535b23430ab439e584e2caebf1fb5115.
+- Run python3 scripts/verify.py to capture ordinary tests, optimized tests and the campaign.
+- Run python3 scripts/check_record.py to match report and source hashes.
+- Read the beginner runbook, coverage matrices, limitations and evidence review before interpreting a pass.
+
+The [frozen implementation](https://github.com/holeyfield33-art/Asi-Research-v2/tree/bb5b48bc535b23430ab439e584e2caebf1fb5115), [campaign record](https://github.com/holeyfield33-art/Asi-Research-v2/blob/f5e603ee8f10953c8ca38601f7467eb77bf4cb06/results/experiment-001.json), [test record](https://github.com/holeyfield33-art/Asi-Research-v2/blob/f5e603ee8f10953c8ca38601f7467eb77bf4cb06/results/verification.json), and [frozen protocol](https://github.com/holeyfield33-art/Asi-Research-v2/blob/bb5b48bc535b23430ab439e584e2caebf1fb5115/docs/PROTOCOL.md) are immutable evidence links. The [original architecture note](https://index.aletheia-core.com/#/research/reference-not-authority) remains separate.
+
+## 10. Conclusion and future research
+
+Experiment 001 supplies reproducible evidence for selected controlled-materialization paths under explicit trust assumptions. All selected checks passed and authorized controls worked. Untested threats remain visible, and local execution is distinguished from independent reproduction.
+
+Next steps are independent reproduction, adversarial model integration under the same frozen boundaries, and targeted residual, availability and metadata measurements. Stateful or richer-policy extensions require new scope and measured revisions. The results article stays at the human publication review gate; the original architecture note retains its historical status.

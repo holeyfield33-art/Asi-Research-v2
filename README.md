@@ -1,8 +1,8 @@
 # Reference ≠ Authority — Experiment 001
 
 Small, synthetic security-boundary lab for ASI Architecture Note 001. MIT licensed.
-This repository contains the implementation and reproducible evidence. The new
-research article will be written after review of the results.
+This repository contains the implementation, reproducible evidence and a locally
+reviewed article draft. Publication remains at the human review gate.
 
 An adversarial scripted planner receives opaque references, not plaintext or
 grant secrets. A trusted controller evaluates externally issued, single-use
@@ -37,6 +37,14 @@ Read [the frozen protocol](docs/PROTOCOL.md), [provenance](PROVENANCE.md), and
 [results](results/README.md). A bounded pass applies only to recorded tests under
 the stated trusted computing base. It does not validate a production system,
 establish truth of content, or demonstrate end-to-end protection against a model.
+
+Start with the [beginner runbook](docs/BEGINNER-RUNBOOK.md), which uses a separate
+checkout of the measured revision and preserves historical reports. The
+[invariant matrix](docs/INVARIANT-COVERAGE.md), [threat matrix](docs/THREAT-COVERAGE.md),
+[limits and negative results](docs/LIMITATIONS.md) and
+[publication readiness](docs/PUBLICATION-READINESS.md) distinguish measured paths
+from untested conditions. Machine-readable coverage and evidence review are in
+`results/coverage.json` and `results/evidence-review.json`.
 
 ## Layout
 

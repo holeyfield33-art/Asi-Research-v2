@@ -1,0 +1,36 @@
+{
+  "schema": "asi-evidence-review-v1",
+  "timestamp_utc": "2026-10-12T16:31:57Z",
+  "review_kind": "distinct local verification pass by the coding agent; not independent reproduction",
+  "measurement_revision": "bb5b48bc535b23430ab439e584e2caebf1fb5115",
+  "checks": {
+    "measured_worktree_clean": true,
+    "all_21_selected_cases_pass": true,
+    "ordinary_and_optimized_tests_recorded": true,
+    "materialized_controls_recorded": true,
+    "five_invariants": true,
+    "ten_threats": true,
+    "matrix_case_and_test_ids_resolve": true,
+    "authorized_compute_and_display": true,
+    "fresh_child_compute_grant_does_not_disclose": true,
+    "denial_side_effect_checks": true,
+    "actual_parent_and_protected_child": true,
+    "isolation_positive_controls_and_observations": true,
+    "untested_threats_explicit": true,
+    "initial_MIT_commit_preserved": true
+  },
+  "evidence_sha256": {
+    "results/experiment-001.json": "9a5e1dbb6959ba43c8cecc4082809235ea3d71f721a8e9847526dee730adaac0",
+    "results/verification.json": "ec3e43f6993e0cf025b92199c4281e03fdf7ca9d345ce0cd17856da6c948f0de",
+    "results/coverage.json": "8d354c18978538f0505599a6e45daef08c72bb5e66c36932a3bac1fdbcba3b0b",
+    "provenance/materialized-controls.json": "fc1d6b55db753c224a9c41f0f2be37e743966ee0ece8f3a10321ff22513b9e18"
+  },
+  "bounded_evidence_review_pass": true,
+  "readiness": "CONDITIONAL GO",
+  "conditions": [
+    "human publication review and approval",
+    "state all measured/untested limits in article",
+    "hosted CI could not start due to account billing lock; local results do not replace independent reproduction"
+  ],
+  "publication_authorized": false
+}
