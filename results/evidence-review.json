@@ -1,6 +1,6 @@
 {
   "schema": "asi-evidence-review-v1",
-  "timestamp_utc": "2026-10-12T16:31:57Z",
+  "timestamp_utc": "2026-10-12T16:39:28Z",
   "review_kind": "distinct local verification pass by the coding agent; not independent reproduction",
   "measurement_revision": "bb5b48bc535b23430ab439e584e2caebf1fb5115",
   "checks": {
@@ -19,11 +19,12 @@
     "untested_threats_explicit": true,
     "initial_MIT_commit_preserved": true
   },
+  "evidence_hash_basis": "UTF-8 text with CRLF normalized to LF; frozen campaign raw hash remains independently checked",
   "evidence_sha256": {
     "results/experiment-001.json": "9a5e1dbb6959ba43c8cecc4082809235ea3d71f721a8e9847526dee730adaac0",
     "results/verification.json": "ec3e43f6993e0cf025b92199c4281e03fdf7ca9d345ce0cd17856da6c948f0de",
-    "results/coverage.json": "8d354c18978538f0505599a6e45daef08c72bb5e66c36932a3bac1fdbcba3b0b",
-    "provenance/materialized-controls.json": "fc1d6b55db753c224a9c41f0f2be37e743966ee0ece8f3a10321ff22513b9e18"
+    "results/coverage.json": "3ccdbca49e250e509ca90bef7d804570b3ba5fd665b8baa671f89a3278c623f4",
+    "provenance/materialized-controls.json": "b120d2230d32cfb238dff6018cff7a9d40c773cc9f06851ecefc48d058ecd5f1"
   },
   "bounded_evidence_review_pass": true,
   "readiness": "CONDITIONAL GO",

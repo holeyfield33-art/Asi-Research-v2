@@ -10,6 +10,9 @@ Its 20 source hashes and report hash verify against immutable Git objects. The
 their records are not overwritten by documentation changes. A distinct local
 review passed 14 evidence-consistency/coverage checks, recorded in
 `results/evidence-review.json`. This is not independent external reproduction.
+Review-artifact hashes explicitly use normalized UTF-8/LF text so Windows and
+Linux checkouts agree; `scripts/check_review_record.py` verifies them read-only.
+The original campaign's raw-byte source/report hashes remain unchanged.
 
 The existing materialized identity lab remains intact at
 `2dbcbc3081fa1fdfe52dbbf645910cda68db1f1c`, with recorded upstream extraction
