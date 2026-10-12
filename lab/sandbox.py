@@ -9,6 +9,23 @@ import sys
 import time
 
 PUBLIC = Path(__file__).resolve().parent / "public"
+SANDBOX_PYTHON = Path("/usr/bin/python3")
+# The Gate accepts at most 8 KiB of UTF-8 text. JSON escaping can use six ASCII
+# bytes per input byte, so a 64 KiB frame retains a bounded full-size candidate.
+MAX_FRAME_BYTES = 65536
+
+
+def sandbox_python_metadata():
+    """Report the interpreter actually mounted and launched inside Bubblewrap."""
+    if not SANDBOX_PYTHON.is_file():
+        raise RuntimeError("sandbox requires /usr/bin/python3")
+    version = subprocess.check_output(
+        [str(SANDBOX_PYTHON), "-I", "-c",
+         "import platform; print(platform.python_version())"],
+        text=True, timeout=5, env={"PATH": "/usr/bin:/bin"}).strip()
+    return {"executable": str(SANDBOX_PYTHON),
+            "resolved_executable": str(SANDBOX_PYTHON.resolve()),
+            "version": version}
 
 
 def limits():
@@ -24,6 +41,8 @@ def command(script):
         raise RuntimeError("Linux with Bubblewrap is required; no insecure fallback")
     if script not in {"planner.py", "worker.py", "probe.py", "protocol_fault.py"}:
         raise ValueError("unapproved executable")
+    if not SANDBOX_PYTHON.is_file():
+        raise RuntimeError("sandbox requires /usr/bin/python3")
     args = [shutil.which("bwrap"), "--unshare-all", "--die-with-parent",
             "--new-session", "--clearenv", "--cap-drop", "ALL"]
     for location in ("/usr", "/lib", "/lib64", "/bin"):
@@ -32,7 +51,7 @@ def command(script):
     args += ["--dir", "/dev", "--ro-bind", "/dev/null", "/dev/null",
              "--ro-bind", str(PUBLIC), "/app", "--chdir", "/app",
              "--setenv", "PYTHONDONTWRITEBYTECODE", "1", "--remount-ro", "/",
-             "--", "/usr/bin/python3", "-I", "/app/" + script]
+             "--", str(SANDBOX_PYTHON), "-I", "/app/" + script]
     return args
 
 
@@ -45,9 +64,12 @@ def launch(script):
 
 def execute(script, payload):
     import json
+    wire = json.dumps(payload, ensure_ascii=False) + "\n"
+    if len(wire.encode("utf-8")) > MAX_FRAME_BYTES:
+        raise ValueError("sandbox protocol failure")
     proc = launch(script)
     try:
-        proc.stdin.write(json.dumps(payload) + "\n")
+        proc.stdin.write(wire)
         proc.stdin.close()
         buffers = {proc.stdout: bytearray(), proc.stderr: bytearray()}
         open_streams = list(buffers)
@@ -65,7 +87,7 @@ def execute(script, payload):
                     open_streams.remove(stream)
                 else:
                     buffers[stream].extend(chunk)
-                    if sum(len(buf) for buf in buffers.values()) > 16384:
+                    if sum(len(buf) for buf in buffers.values()) > MAX_FRAME_BYTES:
                         raise ValueError("sandbox protocol failure")
         proc.wait(timeout=max(0.01, deadline - time.monotonic()))
         # Never reflect raw stdout/stderr into audit or planner responses.

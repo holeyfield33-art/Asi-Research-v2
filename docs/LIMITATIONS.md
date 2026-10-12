@@ -43,3 +43,21 @@ external reproduction is claimed. GitHub run 38223711858 did not start because t
 account was locked due to billing; its infrastructure failure is preserved at
 https://github.com/holeyfield33-art/Asi-Research-v2/actions/runs/38223711858.
 K1 is a separate investigation and supplies no evidence for Experiment 001.
+
+## Post-freeze implementation corrections
+
+PR review found two portability/capacity issues outside the frozen ASCII campaign.
+The sandbox always launched `/usr/bin/python3`, while the campaign originally
+recorded only the invoking Python version. The current launcher records the exact
+sandbox interpreter path, resolved path and version separately in future reports.
+The frozen launcher selected Ubuntu's `/usr/bin/python3`; its saved report records
+the invoking Python as 3.14.4 but not the worker version. In the reviewed Ubuntu
+environment, both paths currently report 3.14.4. The existing report is not
+retroactively rewritten.
+
+The original worker protocol escaped non-ASCII JSON and could deny a valid
+Unicode result before the 8 KiB Gate text limit. The current code serializes
+Unicode directly and uses a 64 KiB bounded frame, large enough for the worst
+JSON escaping of an 8 KiB candidate. Focused tests cover non-ASCII text and
+control characters at the Gate limit. These are later implementation fixes,
+not new evidence for the frozen 21-check campaign or an expansion of its scope.

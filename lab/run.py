@@ -13,7 +13,7 @@ import tempfile
 import time
 
 from .control import Control
-from .sandbox import execute, launch
+from .sandbox import execute, launch, sandbox_python_metadata
 
 ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD = "synthetic protected canary 7d42"
@@ -208,6 +208,7 @@ def main():
               "worktree_status": git("status", "--porcelain", "--untracked-files=all"),
               "source_sha256": manifest,
               "host": {"platform": platform.platform(), "python": platform.python_version(),
+                       "sandbox_python": sandbox_python_metadata(),
                        "bubblewrap": subprocess.check_output(["bwrap", "--version"], text=True).strip(),
                        "os_release": Path("/etc/os-release").read_text(),
                        "kernel": platform.release()},

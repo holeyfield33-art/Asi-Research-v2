@@ -3,6 +3,8 @@
 Small, synthetic security-boundary lab for ASI Architecture Note 001. MIT licensed.
 This repository contains the implementation, reproducible evidence and a locally
 reviewed article draft. Publication remains at the human review gate.
+The measured source is pinned to `bb5b48b`; later review fixes on this branch are
+documented in [limitations](docs/LIMITATIONS.md) and do not rewrite frozen evidence.
 
 An adversarial scripted planner receives opaque references, not plaintext or
 grant secrets. A trusted controller evaluates externally issued, single-use
@@ -24,10 +26,11 @@ python3 -O -m unittest discover -s tests -v
 python3 -m lab.run --output results/local-run.json
 ```
 
-For an authoritative record, start from a clean committed checkout and run
-`python3 scripts/verify.py`. It captures both test modes and the campaign, then
-`python3 scripts/check_record.py` checks source hashes against Git objects and
-the measured report against the verification record.
+For a reproduction of the frozen record, use the [beginner runbook](docs/BEGINNER-RUNBOOK.md)
+to make a separate checkout at `bb5b48b` before running `python3 scripts/verify.py`.
+That command writes the two historical result paths and must not be run on this
+publication branch. `python3 scripts/check_record.py` checks the committed
+source hashes and measured report without changing them.
 
 On Windows, run these commands inside Ubuntu WSL from the repository directory.
 There is deliberately no unsandboxed Windows execution fallback. The measured

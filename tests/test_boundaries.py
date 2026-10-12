@@ -1,11 +1,17 @@
 import copy
+from contextlib import redirect_stdout
+from io import StringIO
+import json
+from pathlib import Path
+import subprocess
+import tempfile
 import unittest
 from unittest.mock import patch
 
 from lab.control import Control
 from lab.identity import commitment
-from lab.run import campaign, isolation
-from lab.sandbox import command, execute
+from lab.run import campaign, isolation, main as run_main
+from lab.sandbox import MAX_FRAME_BYTES, command, execute, sandbox_python_metadata
 
 
 class Boundaries(unittest.TestCase):
@@ -104,6 +110,47 @@ class Boundaries(unittest.TestCase):
             with self.assertRaises(ValueError) as context:
                 execute("protocol_fault.py", {"mode": mode, "text": "synthetic secret"})
             self.assertNotIn("synthetic secret", str(context.exception))
+
+    def test_sandbox_report_identifies_the_launched_interpreter(self):
+        metadata = sandbox_python_metadata()
+        self.assertEqual(command("worker.py")[-3], metadata["executable"])
+        self.assertEqual(metadata["resolved_executable"],
+                         str(Path(metadata["executable"]).resolve()))
+        actual = subprocess.check_output(
+            [metadata["executable"], "-I", "-c",
+             "import platform; print(platform.python_version())"], text=True).strip()
+        self.assertEqual(metadata["version"], actual)
+
+    def test_new_local_report_records_sandbox_interpreter_separately(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "local-report.json"
+            with redirect_stdout(StringIO()), \
+                 patch("sys.argv", ["lab.run", "--output", str(output)]), \
+                 patch("lab.run.platform.python_version", return_value="alternate-invoker"), \
+                 patch("lab.run.campaign", return_value=[{"pass": True}]), \
+                 patch("lab.run.isolation", return_value={"pass": True}):
+                self.assertEqual(run_main(), 0)
+            report = json.loads(output.read_text(encoding="utf-8"))
+        self.assertEqual(report["host"]["python"], "alternate-invoker")
+        self.assertEqual(report["host"]["sandbox_python"], sandbox_python_metadata())
+
+    def test_worker_accepts_valid_unicode_and_escaped_text_at_gate_limit(self):
+        for text in ("🦊" * 1400, "\x00" * 8192):
+            with self.subTest(text_size=len(text)):
+                control = Control()
+                ref = control.register(text)
+                token = control.issue(ref, "uppercase", "test", "worker")
+                request = {"ref": ref, "operation": "uppercase",
+                           "purpose": "test", "destination": "worker"}
+                result = control.handle(request, token)
+                self.assertEqual(result["status"], "computed")
+                self.assertEqual(control.registry[result["ref"]]["text"], text.upper())
+
+    def test_oversized_protocol_input_fails_before_launch(self):
+        with patch("lab.sandbox.launch") as launcher:
+            with self.assertRaisesRegex(ValueError, "sandbox protocol failure"):
+                execute("worker.py", {"text": "\x00" * MAX_FRAME_BYTES})
+            launcher.assert_not_called()
 
 
 if __name__ == "__main__":
