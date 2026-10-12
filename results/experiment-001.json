@@ -1,0 +1,684 @@
+{
+  "schema": "asi-experiment-001-v1",
+  "timestamp_utc": "2026-10-12T08:25:55Z",
+  "source_revision": "bb5b48bc535b23430ab439e584e2caebf1fb5115",
+  "worktree_status": "",
+  "source_sha256": {
+    ".gitattributes": "d60f352d0db1404c70afb4bb8b2ca3fd1c610572aa40720e8a0b7baa7885418c",
+    ".github/workflows/lab.yml": "0a8939b1069ec3998e65acf85b572b6bb00975ae17885993de27d205a770909e",
+    ".gitignore": "05048eb49ec1234d19eb9e0e47d94189a6c200b03ffc235c64d4820f426b5205",
+    "LICENSE": "74d09863708d30e70ec3e41ec9976e719bcee1f4bf9b51a448967bf49e93146c",
+    "PROVENANCE.md": "cf095976ef1615a07ff68d37abea63b57fa59eb95804ddeaaf9f6534b433ee2e",
+    "README.md": "caf23a5af33270e8d3874b0ea2d17b03bd3934307f21bb61011a27b0c5b3cb6b",
+    "docs/PROTOCOL.md": "9120e3451fc86935febdb52cf8ada86ac86a69dc41dfb61d081337018d944ad1",
+    "lab/__init__.py": "ce83686544f7de03f5f649d3877fecefcee38403d6bd4018d49c75e9a849c870",
+    "lab/control.py": "21c00ef576c11e2da2f0e806b9f22c0c5d2ec7561831d81d7ce48bb7bf590cd6",
+    "lab/identity.py": "61ad8984617a8c15a1897c865101c5f9b743c66efcd57978aa50930e69b53fb4",
+    "lab/public/planner.py": "a3ce2361446c33db24a3a8edc11f31ef358b65c2daff1b3d88136c8a9c65c352",
+    "lab/public/probe.py": "8e7d43344b443e3460ab3b85fe8cdae9f2acccdb1e45712389beffe2d7b72123",
+    "lab/public/protocol_fault.py": "a6030f8e2521503a83d4dc862cbda38d1827d509776d2a6d79d0f1a55bfef4c3",
+    "lab/public/worker.py": "3a703a40ae29c2f0244f8fbf5c699d0f939817ff29a09c9578ce9ca6b3e03f19",
+    "lab/run.py": "a776a4c5d7fe064a26108c92044523bc9fa2dfab82e44a915495fe1ff0d16d00",
+    "lab/sandbox.py": "84f3d54000ca783f2bf44252cb39df9bfb82e787aa53e3b66a3abaa6c344de50",
+    "provenance/sources.json": "08e9f7b1a5532b8bead7db42b5e165e597e429be68e62f518305bb2d3f51041e",
+    "scripts/check_record.py": "85c0603e5ee0989231cb6cc9cdd56f335d262a96512c8f2b4c8362ad101a2792",
+    "scripts/verify.py": "101c1a1a089862e2ebd45cfc3fd166cc5538ee648b527e290f1e53e7f5e534ac",
+    "tests/test_boundaries.py": "400e6eb16dfd1d01cb85dea0669583e46d89d7c942bab98b59d78794feb9e559"
+  },
+  "host": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "python": "3.14.4",
+    "bubblewrap": "bubblewrap 0.11.1",
+    "os_release": "PRETTY_NAME=\"Ubuntu 26.04 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04 (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+    "kernel": "6.18.33.2-microsoft-standard-WSL2"
+  },
+  "events": [
+    {
+      "case": "authorized-compute",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "computed",
+        "ref": "36cdfd22066e43ed1d1b9563e9cc8c9b547d18dd6390b5fc"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "output_correct": true,
+        "protected_child": true,
+        "actual_parent": true
+      },
+      "pass": true
+    },
+    {
+      "case": "compute-to-disclose",
+      "request": {
+        "ref": "36cdfd22066e43ed1d1b9563e9cc8c9b547d18dd6390b5fc",
+        "operation": "display",
+        "purpose": "synthetic-test",
+        "destination": "display"
+      },
+      "grant": {
+        "ref": "36cdfd22066e43ed1d1b9563e9cc8c9b547d18dd6390b5fc",
+        "digest": "bf45f8c9396dbea90a06939c014f29488c4b41d9c8fcb99d02276ce3720c9a72",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "authorized-display",
+      "request": {
+        "ref": "36cdfd22066e43ed1d1b9563e9cc8c9b547d18dd6390b5fc",
+        "operation": "display",
+        "purpose": "synthetic-test",
+        "destination": "display"
+      },
+      "grant": {
+        "ref": "36cdfd22066e43ed1d1b9563e9cc8c9b547d18dd6390b5fc",
+        "digest": "bf45f8c9396dbea90a06939c014f29488c4b41d9c8fcb99d02276ce3720c9a72",
+        "operation": "display",
+        "purpose": "synthetic-test",
+        "destination": "display",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "disclosed"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "authorized_control_display": true
+      },
+      "pass": true
+    },
+    {
+      "case": "replay",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "no-grant",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": null,
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "unknown-ref",
+      "request": {
+        "ref": "000000000000000000000000000000000000000000000000",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "substitute-operation",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "display",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "substitute-purpose",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "exfiltrate",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "substitute-destination",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "external"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "substitute-ref",
+      "request": {
+        "ref": "2d32a78da3d34883719e15ade4642bb3b4f913964e0e6eca",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "self-authorize",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "grant": "planner-claim"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "lineage-confusion",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "parents": []
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "policy-laundering",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "policy": "public"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "revoked",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "expired",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": true
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "tampered-content",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "tampered-digest",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "tampered-policy",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "tampered-parents",
+      "request": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker"
+      },
+      "grant": {
+        "ref": "4cfe184363fa8be2734bb1a8b41707040a22ef1c0be7a414",
+        "digest": "f0a9f9aac34a592daa436ca948e336d2d10991c9b1b90ed289538df6dc18b08f",
+        "operation": "uppercase",
+        "purpose": "synthetic-test",
+        "destination": "worker",
+        "expired_at_decision": false
+      },
+      "decision": {
+        "status": "denied"
+      },
+      "checks": {
+        "expected_decision": true,
+        "planner_no_plaintext": true,
+        "no_worker_execution": true,
+        "no_disclosure": true
+      },
+      "pass": true
+    },
+    {
+      "case": "audit-channel",
+      "pass": true,
+      "checks": {
+        "no_plaintext": true,
+        "complete_campaign": true
+      },
+      "observations": [
+        {
+          "sequence": 1,
+          "decision": "computed"
+        },
+        {
+          "sequence": 2,
+          "decision": "denied"
+        },
+        {
+          "sequence": 3,
+          "decision": "disclosed"
+        },
+        {
+          "sequence": 4,
+          "decision": "denied"
+        },
+        {
+          "sequence": 5,
+          "decision": "denied"
+        },
+        {
+          "sequence": 6,
+          "decision": "denied"
+        },
+        {
+          "sequence": 7,
+          "decision": "denied"
+        },
+        {
+          "sequence": 8,
+          "decision": "denied"
+        },
+        {
+          "sequence": 9,
+          "decision": "denied"
+        },
+        {
+          "sequence": 10,
+          "decision": "denied"
+        },
+        {
+          "sequence": 11,
+          "decision": "denied"
+        },
+        {
+          "sequence": 12,
+          "decision": "denied"
+        },
+        {
+          "sequence": 13,
+          "decision": "denied"
+        },
+        {
+          "sequence": 14,
+          "decision": "denied"
+        },
+        {
+          "sequence": 15,
+          "decision": "denied"
+        },
+        {
+          "sequence": 16,
+          "decision": "denied"
+        },
+        {
+          "sequence": 17,
+          "decision": "denied"
+        },
+        {
+          "sequence": 18,
+          "decision": "denied"
+        },
+        {
+          "sequence": 19,
+          "decision": "denied"
+        }
+      ]
+    },
+    {
+      "case": "sandbox-isolation",
+      "checks": {
+        "host_file_positive_control": true,
+        "host_listener_positive_control": true,
+        "inherited_fd_positive_control": true,
+        "filtered_environment": true,
+        "no_inherited_descriptors": true,
+        "host_network_blocked": true,
+        "external_network_blocked": true,
+        "protected_host_file": true,
+        "trusted_controller": true,
+        "host_process_memory": true,
+        "shared_memory": true,
+        "write:/app/escape.txt": true,
+        "write:/tmp/escape.txt": true,
+        "write:/escape.txt": true,
+        "write:/dev/escape.txt": true
+      },
+      "observations": {
+        "environment_secret": false,
+        "pid": 2,
+        "fds": [],
+        "stdout_open": true,
+        "protected_host_file": "blocked",
+        "trusted_controller": "blocked",
+        "host_process_memory": "blocked",
+        "shared_memory": "blocked",
+        "write:/app/escape.txt": "blocked",
+        "write:/tmp/escape.txt": "blocked",
+        "write:/escape.txt": "blocked",
+        "write:/dev/escape.txt": "blocked",
+        "host_network": "blocked",
+        "external_network": "blocked"
+      },
+      "pass": true
+    }
+  ],
+  "tested_cases_pass": true,
+  "verdict": "BOUNDED_PASS",
+  "untested": [
+    "kernel/root compromise",
+    "swap/page-cache residuals and perfect erasure",
+    "covert and timing channels",
+    "hostile replacement of trusted worker",
+    "stateful model memory",
+    "real-model end-to-end attacks",
+    "external providers",
+    "multi-user identity",
+    "unbounded request flooding",
+    "semantic truth/provenance"
+  ]
+}

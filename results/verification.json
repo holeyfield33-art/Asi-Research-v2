@@ -1,0 +1,40 @@
+{
+  "schema": "asi-verification-v1",
+  "source_revision": "bb5b48bc535b23430ab439e584e2caebf1fb5115",
+  "tests": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_actual_worker_transport_faults_are_bounded_and_sanitized (test_boundaries.Boundaries.test_actual_worker_transport_faults_are_bounded_and_sanitized) ... ok\ntest_campaign (test_boundaries.Boundaries.test_campaign) ... ok\ntest_deny_everything_fails_authorized_control (test_boundaries.Boundaries.test_deny_everything_fails_authorized_control) ... ok\ntest_disclosure_requires_distinct_authority_not_just_unused_token (test_boundaries.Boundaries.test_disclosure_requires_distinct_authority_not_just_unused_token) ... ok\ntest_expiry_boundary_and_fresh_grant (test_boundaries.Boundaries.test_expiry_boundary_and_fresh_grant) ... ok\ntest_identity_covers_text_lineage_policy (test_boundaries.Boundaries.test_identity_covers_text_lineage_policy) ... ok\ntest_identity_positive_control_and_constant_hash_falsification (test_boundaries.Boundaries.test_identity_positive_control_and_constant_hash_falsification) ... ok\ntest_malformed_requests_never_execute (test_boundaries.Boundaries.test_malformed_requests_never_execute) ... ok\ntest_malformed_worker_output_no_registration_and_no_replay (test_boundaries.Boundaries.test_malformed_worker_output_no_registration_and_no_replay) ... ok\ntest_no_windows_fallback (test_boundaries.Boundaries.test_no_windows_fallback) ... ok\ntest_os_isolation (test_boundaries.Boundaries.test_os_isolation) ... ok\ntest_snapshot_is_identity_checked_and_used (test_boundaries.Boundaries.test_snapshot_is_identity_checked_and_used) ... ok\ntest_worker_failure_does_not_expose_error_text (test_boundaries.Boundaries.test_worker_failure_does_not_expose_error_text) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 1.735s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_actual_worker_transport_faults_are_bounded_and_sanitized (test_boundaries.Boundaries.test_actual_worker_transport_faults_are_bounded_and_sanitized) ... ok\ntest_campaign (test_boundaries.Boundaries.test_campaign) ... ok\ntest_deny_everything_fails_authorized_control (test_boundaries.Boundaries.test_deny_everything_fails_authorized_control) ... ok\ntest_disclosure_requires_distinct_authority_not_just_unused_token (test_boundaries.Boundaries.test_disclosure_requires_distinct_authority_not_just_unused_token) ... ok\ntest_expiry_boundary_and_fresh_grant (test_boundaries.Boundaries.test_expiry_boundary_and_fresh_grant) ... ok\ntest_identity_covers_text_lineage_policy (test_boundaries.Boundaries.test_identity_covers_text_lineage_policy) ... ok\ntest_identity_positive_control_and_constant_hash_falsification (test_boundaries.Boundaries.test_identity_positive_control_and_constant_hash_falsification) ... ok\ntest_malformed_requests_never_execute (test_boundaries.Boundaries.test_malformed_requests_never_execute) ... ok\ntest_malformed_worker_output_no_registration_and_no_replay (test_boundaries.Boundaries.test_malformed_worker_output_no_registration_and_no_replay) ... ok\ntest_no_windows_fallback (test_boundaries.Boundaries.test_no_windows_fallback) ... ok\ntest_os_isolation (test_boundaries.Boundaries.test_os_isolation) ... ok\ntest_snapshot_is_identity_checked_and_used (test_boundaries.Boundaries.test_snapshot_is_identity_checked_and_used) ... ok\ntest_worker_failure_does_not_expose_error_text (test_boundaries.Boundaries.test_worker_failure_does_not_expose_error_text) ... ok\n\n----------------------------------------------------------------------\nRan 13 tests in 1.798s\n\nOK\n"
+    }
+  ],
+  "campaign_returncode": 0,
+  "campaign_stdout": "{\"verdict\": \"BOUNDED_PASS\", \"cases\": 21, \"output\": \"/mnt/c/Users/SuperAdmin/.vscode/asi-research-v2/results/experiment-001.json\"}\n",
+  "campaign_stderr": "",
+  "campaign_report_sha256": "9a5e1dbb6959ba43c8cecc4082809235ea3d71f721a8e9847526dee730adaac0",
+  "all_pass": true
+}
